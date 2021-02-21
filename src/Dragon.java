@@ -21,6 +21,9 @@ public class Dragon {
         }
         if ((age > 0)) {
             this.age = age;
+            System.out.println("возраст успешно введен : " + this.age);
+        } else {
+            System.out.println("ПРОБЛЕМА");
         }
         this.description = d;
         if (w > 0) {
@@ -62,6 +65,12 @@ class Coordinates {
             this.y = y;
         }
     }
+    public long getX(){
+        return x;
+    }
+    public Double getY(){
+        return y;
+    }
 }
 
 class DragonCave {
@@ -75,6 +84,9 @@ class DragonCave {
     }
     public int getDepth(){
         return depth;
+    }
+    public Double getNumberOfTreasures() {
+        return numberOfTreasures;
     }
 }
 

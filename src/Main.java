@@ -1,7 +1,4 @@
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -20,7 +17,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
         // считываем из файла с помощью Scanner
-        Scanner xmlScanner = new Scanner(new File("C:\\Users\\Sheogarath\\IdeaProjects\\LAB5\\src\\DragonCollection.xml"));
+        Scanner xmlScanner = new Scanner(new File("C:\\Users\\Sheogarath\\IdeaProjects\\LAB5\\src\\NewDragonCollection.xml"));
         String xmlString = "";
         while(xmlScanner.hasNext()) {
             xmlString += xmlScanner.nextLine();
@@ -56,7 +53,7 @@ public class Main {
 
     }
 
-    public static void processingCommands(Scanner scanner, LinkedHashSet<Dragon> set) throws FileNotFoundException {
+    public static void processingCommands(Scanner scanner, LinkedHashSet<Dragon> set) throws FileNotFoundException, ParserConfigurationException {
         boolean exitStatus = false;
         while (!exitStatus){
             String[] text = scanner.nextLine().split(" ", 2);
@@ -82,7 +79,7 @@ public class Main {
                 case ("show"): // DONE
                     if (argument != null) System.out.println("'show' command was detected");
                     for (Dragon dragon : set) {
-                        System.out.println(dragon.getDescription());
+                        System.out.println(dragon.getAge());
                     }
                     break;
                 case ("clear"): // DONE
@@ -219,6 +216,23 @@ public class Main {
                     }
                     break;
                 case ("save") :
+                    Document newDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+                    Element rootElement = newDocument.createElement("Dragons");
+                    newDocument.appendChild(rootElement);
+                    for (Dragon dragon : set) {
+                        Element dragonElement = newDocument.createElement("dragon");
+                        rootElement.appendChild(dragonElement);
+                        dragonElement.setAttribute("name", dragon.getName());
+                        String coordinatesField = dragon.getCoordinates().getX() + " " + dragon.getCoordinates().getY();
+                        dragonElement.setAttribute("coordinates", coordinatesField);
+                        dragonElement.setAttribute("age", Long.toString(dragon.getAge()));
+                        dragonElement.setAttribute("description", dragon.getDescription());
+                        dragonElement.setAttribute("wingspan", Double.toString(dragon.getWingspan()));
+                        dragonElement.setAttribute("type", dragon.getType().toString());
+                        String caveField = dragon.getCave().getDepth() + " " + dragon.getCave().getNumberOfTreasures();
+                        dragonElement.setAttribute("cave", caveField);
+                    }
+                    writeDocument(newDocument, "C:\\Users\\Sheogarath\\IdeaProjects\\LAB5\\src\\NewDragonCollection.xml");
                     break;
                     // и далее функции
             }
