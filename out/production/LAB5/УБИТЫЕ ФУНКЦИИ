@@ -1,0 +1,27 @@
+public static Dragon dragonFromString(String message){
+        String[] fields = message.split(" +");
+        for (String field : fields) {
+            System.out.println(field);
+        }
+        String name = fields[1];
+        long x = Long.parseLong(fields[2]);
+        Double y = Double.parseDouble(fields[3]);
+        Coordinates coords = new Coordinates(x, y);
+        Long age = Long.parseLong(fields[4]);
+        String d = fields[5];
+        Double w = Double.parseDouble(fields[6]);
+        DragonType type = dragonTypeFromString(fields[7]);
+        int depth = Integer.parseInt(fields[8]);
+        Double number = Double.parseDouble(fields[9]);
+        DragonCave cave = new DragonCave(depth, number);
+        return new Dragon(name, coords, age, d, w, type, cave);
+    }
+public static DragonType dragonTypeFromString(String type) {
+        DragonType dragonType = switch (type) {
+            case ("UNDERGROUND") -> DragonType.UNDERGROUND;
+            case ("AIR") -> DragonType.AIR;
+            case ("FIRE") -> DragonType.FIRE;
+            default -> null;
+        };
+        return dragonType;
+    }
