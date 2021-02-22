@@ -17,7 +17,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
         // считываем из файла с помощью Scanner
-        Scanner xmlScanner = new Scanner(new File("C:\\Users\\Sheogarath\\IdeaProjects\\LAB5\\src\\NewDragonCollection.xml"));
+        Scanner xmlScanner = new Scanner(new File("C:\\Users\\Sheogarath\\IdeaProjects\\LAB5\\src\\DragonCollection.xml"));
         String xmlString = "";
         while(xmlScanner.hasNext()) {
             xmlString += xmlScanner.nextLine();
@@ -105,6 +105,7 @@ public class Main {
                     if (argument != null) System.out.println("'add' command was detected");
                     Dragon addedDragon = inputDragonFromConsole();
                     set.add(addedDragon);
+                    System.out.println(addedDragon.getCoordinates().getX() + " " + addedDragon.getCoordinates().getY());
                     System.out.println("new Dragon has been added");
                     break;
                 case ("add_if_max"):
@@ -267,31 +268,24 @@ public class Main {
                 System.out.println("field can't be empty. Try again");
             }
         }
-        exceptionStatus = 0;
         System.out.println("Enter x coordinate");
-        long x = 0L;
-        inputLongField(x);
+        long x = inputLongField();
         System.out.println("Enter y coordinate");
-        Double y = 0d;
-        inputDoubleField(y);
+        Double y = inputDoubleField();
         Coordinates coordinates = new Coordinates(x, y);
         System.out.println("Enter age");
-        Long age = 0L;
-        inputPositiveLongField(age);
+        Long age = inputPositiveLongField();
         System.out.println("Enter description");
         String description = consoleScanner.nextLine();
         System.out.println("Enter wingspan");
-        Double wingspan = 0d;
-        inputPositiveDoubleField(wingspan);
+        Double wingspan = inputPositiveDoubleField();
         System.out.println("Enter type(UNDERGROUND, AIR, FIRE)");
         String dragonType = consoleScanner.nextLine();
         DragonType type = inputDragonTypeField(dragonType);
         System.out.println("Enter depth of cave");
-        double depth = 0d;
-        inputPositiveDoubleField(depth);
+        double depth = inputPositiveDoubleField();
         System.out.println("Enter number Of Treasures in cave");
-        Double number = 0d;
-        inputPositiveDoubleField(number);
+        Double number = inputPositiveDoubleField();
         DragonCave cave = new DragonCave((int)depth, number);
         Dragon inputDragon = new Dragon(name, coordinates, age, description, wingspan, type, cave);
         return inputDragon;
@@ -322,9 +316,10 @@ public class Main {
         }
         return dragonType;
     }
-    public static void inputLongField(Long x){
+    public static Long inputLongField(){
         int exceptionStatus = 0;
         Scanner inputScanner = new Scanner(System.in);
+        Long x = null;
         while (exceptionStatus == 0){
             try {
                 x = Long.parseLong(inputScanner.nextLine());
@@ -333,10 +328,12 @@ public class Main {
                 System.out.println("Input must be Long. Try again");
             }
         }
+        return x;
     }
-    public static void inputPositiveLongField(Long x){
+    public static Long inputPositiveLongField(){
         int exceptionStatus = 0;
         Scanner inputScanner = new Scanner(System.in);
+        Long x = null;
         while (exceptionStatus >= 0){
             try {
                 x = Long.parseLong(inputScanner.nextLine());
@@ -353,10 +350,12 @@ public class Main {
                 case (2) -> System.out.println("Input cant be < 0. Try again");
             }
         }
+        return x;
     }
-    public static void inputDoubleField(Double x){
+    public static Double inputDoubleField(){
         int exceptionStatus = 0;
         Scanner inputScanner = new Scanner(System.in);
+        Double x = null;
         while (exceptionStatus == 0){
             try {
                 x = Double.parseDouble(inputScanner.nextLine());
@@ -365,10 +364,12 @@ public class Main {
                 System.out.println("Input must be Duble. Try again.");
             }
         }
+        return x;
     }
-    public static void inputPositiveDoubleField(Double x){
+    public static Double inputPositiveDoubleField(){
         int exceptionStatus = 0;
         Scanner inputScanner = new Scanner(System.in);
+        Double x = null;
         while (exceptionStatus >= 0){
             try {
                 x = Double.parseDouble(inputScanner.nextLine());
@@ -385,6 +386,7 @@ public class Main {
                 case (2) -> System.out.println("Input cant be < 0. Try again");
             }
         }
+        return x;
     }
     public static DragonType dragonTypeFromFile(String type){
         DragonType dragonType = switch (type) {

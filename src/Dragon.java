@@ -21,9 +21,7 @@ public class Dragon {
         }
         if ((age > 0)) {
             this.age = age;
-            System.out.println("возраст успешно введен : " + this.age);
-        } else {
-            System.out.println("ПРОБЛЕМА");
+
         }
         this.description = d;
         if (w > 0) {
