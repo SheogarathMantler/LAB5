@@ -298,6 +298,7 @@ public class Main {
     }
     public static DragonType inputDragonTypeField(String type) {
         int exceptionStatus = 0;
+        Scanner inputScanner = new Scanner(System.in);
         DragonType dragonType = DragonType.AIR;
         while (exceptionStatus == 0){
             switch (type){
@@ -315,6 +316,7 @@ public class Main {
                     break;
                 default:
                     System.out.println("Invalid Dragon type. Try again");
+                    type = inputScanner.nextLine();
                     break;
             }
         }
