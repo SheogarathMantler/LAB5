@@ -66,7 +66,7 @@ public class Main {
             switch (command) {
                 case ("help"):
                     if (argument != null) System.out.println("'help' command was detected");
-                        Scanner helpscanner = new Scanner(new File("C:\\Users\\Sheogarath\\IdeaProjects\\LAB5\\src\\help.txt"));
+                        Scanner helpscanner = new Scanner(new File("/home/s312551/lab5/help.txt"));
                     while (helpscanner.hasNext()){
                         System.out.println(helpscanner.nextLine());
                     }
@@ -181,7 +181,7 @@ public class Main {
                     break;
                 case ("execute_script") :
                     try {
-                        processingCommands(new Scanner(new File(argument)), set);
+                        processingCommands(new Scanner(new File(argument)), set); // /home/s312551/lab5/script.txt
                     } catch (Exception e) {
                         System.out.println("Invalid argument. Try again");
                     }
