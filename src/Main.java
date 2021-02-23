@@ -104,7 +104,6 @@ public class Main {
                     if (argument != null) System.out.println("'add' command was detected");
                     Dragon addedDragon = inputDragonFromConsole();
                     set.add(addedDragon);
-                    System.out.println(addedDragon.getCoordinates().getX() + " " + addedDragon.getCoordinates().getY());
                     System.out.println("new Dragon has been added");
                     break;
                 case ("add_if_max"):
