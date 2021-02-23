@@ -231,7 +231,7 @@ public class Main {
                         String caveField = dragon.getCave().getDepth() + " " + dragon.getCave().getNumberOfTreasures();
                         dragonElement.setAttribute("cave", caveField);
                     }
-                    writeDocument(newDocument, "C:\\Users\\Sheogarath\\IdeaProjects\\LAB5\\src\\NewDragonCollection.xml");
+                    writeDocument(newDocument, "/home/s312551/lab5/DragonCollection.xml");
                     break;
                 default:
                     System.out.println("Invalid command. Try 'help' to see list of commands");
