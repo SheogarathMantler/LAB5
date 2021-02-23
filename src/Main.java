@@ -355,7 +355,7 @@ public class Main {
         while (exceptionStatus >= 0){
             try {
                 x = Long.parseLong(inputScanner.nextLine());
-                if (x < 0) {
+                if (x <= 0) {
                     exceptionStatus = 2;
                 } else {
                     exceptionStatus = -1;
@@ -395,7 +395,7 @@ public class Main {
         while (exceptionStatus >= 0){
             try {
                 x = Double.parseDouble(inputScanner.nextLine());
-                if (x < 0) {
+                if (x <= 0) {
                     exceptionStatus = 2;
                 } else {
                     exceptionStatus = -1;
@@ -415,18 +415,27 @@ public class Main {
         return x;
     }
     public static DragonType dragonTypeFromFile(String type){
+        int exceptionStatus = 0;
+        Scanner inputScanner = new Scanner(System.in);
         DragonType dragonType = null;
-        switch (type) {
-            case("UNDERGROUND"):
-                dragonType = DragonType.UNDERGROUND;
-                break;
-            case ("AIR"):
-                dragonType = DragonType.AIR;
-                break;
-            case ("FIRE"):
-                dragonType = DragonType.FIRE;
-                break;
-        };
+        while (exceptionStatus == 0){
+            switch (type){
+                case ("UNDERGROUND"):
+                    dragonType = DragonType.UNDERGROUND;
+                    exceptionStatus = 1;
+                    break;
+                case ("AIR"):
+                    dragonType = DragonType.AIR;
+                    exceptionStatus = 1;
+                    break;
+                case ("FIRE"):
+                    dragonType = DragonType.FIRE;
+                    exceptionStatus = 1;
+                    break;
+                default:
+                    throw new NumberFormatException();
+            }
+        }
         return dragonType;
     }
     public static Long maxAgeInSet(LinkedHashSet<Dragon> set) {
