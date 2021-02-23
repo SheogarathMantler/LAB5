@@ -5,6 +5,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
@@ -16,7 +17,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
         // считываем из файла с помощью Scanner
-        Scanner xmlScanner = new Scanner(new File("/home/s312551/lab5/DragonCollection.xml"));
+        Scanner xmlScanner = new Scanner(new File("C:\\Users\\Sheogarath\\IdeaProjects\\LAB5\\src\\DragonCollection.xml"));
         String xmlString = "";
         while(xmlScanner.hasNext()) {
             xmlString += xmlScanner.nextLine();
@@ -55,12 +56,12 @@ public class Main {
     public static void processingCommands(Scanner scanner, LinkedHashSet<Dragon> set) throws FileNotFoundException, ParserConfigurationException {
         boolean exitStatus = false;
         while (!exitStatus){
-            String[] text = scanner.nextLine().split(" ", 2);
+            String[] text = scanner.nextLine().replaceAll("^\\s+", "").split(" ", 2);
             String command = text[0];
             String argument;
             try{
                 argument = text[1];
-            } catch (Exception e) {
+            } catch (ArrayIndexOutOfBoundsException e) {
                 argument = null;
             }
             switch (command) {
@@ -78,7 +79,7 @@ public class Main {
                 case ("show"): // DONE
                     if (argument != null) System.out.println("'show' command was detected");
                     for (Dragon dragon : set) {
-                        System.out.println(dragon.getAge());
+                        System.out.println(dragon.getId());
                     }
                     break;
                 case ("clear"): // DONE
@@ -155,7 +156,7 @@ public class Main {
                         } else {
                             System.out.println("No such element in set");
                         }
-                    } catch (Exception e){
+                    } catch (NumberFormatException e){
                         System.out.println("Invalid argument. Try again");
                     }
                     break;
@@ -175,15 +176,17 @@ public class Main {
                         } else {
                             System.out.println("No such element in set");
                         }
-                    } catch (Exception e){
+                    } catch (NumberFormatException e){
                         System.out.println("Invalid argument. Try again");
                     }
                     break;
                 case ("execute_script") :
                     try {
                         processingCommands(new Scanner(new File(argument)), set); // /home/s312551/lab5/script.txt
-                    } catch (Exception e) {
-                        System.out.println("Invalid argument. Try again");
+                    } catch (FileNotFoundException e) {
+                        System.out.println("File not found. Try again");
+                    } catch (NullPointerException e) {
+                        System.out.println("No argument. Try again");
                     }
                     break;
                 case ("filter_starts_with_name") :
@@ -196,7 +199,7 @@ public class Main {
                             }
                         }
                         if (!existing) System.out.println("No such element");
-                    } catch (Exception e){
+                    } catch (NullPointerException e){
                         System.out.println("Invalid argument. Try again");
                     }
                     break;
@@ -210,7 +213,7 @@ public class Main {
                             }
                         }
                         if (!existing) System.out.println("No such element");
-                    } catch (Exception e){
+                    } catch (NumberFormatException e){
                         System.out.println("Invalid argument. Try again");
                     }
                     break;
@@ -235,6 +238,7 @@ public class Main {
                     break;
                 default:
                     System.out.println("Invalid command. Try 'help' to see list of commands");
+                    System.out.println(command);
             }
         }
     }
@@ -249,8 +253,10 @@ public class Main {
             stream = new BufferedOutputStream(new FileOutputStream(path));
             StreamResult result = new StreamResult(stream);
             transformer.transform(domSource, result);
-        } catch (Exception e) {
+        } catch (TransformerException e) {
             e.printStackTrace(System.out);
+        } catch (FileNotFoundException e){
+            System.out.println("File not found. Try again");
         }
     }
 
@@ -323,7 +329,7 @@ public class Main {
             try {
                 x = Long.parseLong(inputScanner.nextLine());
                 exceptionStatus = 1;
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Input must be Long. Try again");
             }
         }
@@ -341,7 +347,7 @@ public class Main {
                 } else {
                     exceptionStatus = -1;
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 exceptionStatus = 1;
             }
             switch (exceptionStatus) {
@@ -363,7 +369,7 @@ public class Main {
             try {
                 x = Double.parseDouble(inputScanner.nextLine());
                 exceptionStatus = 1;
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Input must be Duble. Try again.");
             }
         }
@@ -381,7 +387,7 @@ public class Main {
                 } else {
                     exceptionStatus = -1;
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 exceptionStatus = 1;
             }
             switch (exceptionStatus) {
