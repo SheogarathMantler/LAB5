@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Dragons>
     <dragon name="DRAGO" coordinates="1 1" age="11" description="lool" wingspan="10" type="UNDERGROUND" cave="3 1"/>
     <dragon name="DRAGO" coordinates="2 2" age="22" description="lool2" wingspan="20" type="UNDERGROUND" cave="2 2"/>

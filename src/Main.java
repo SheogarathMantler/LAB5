@@ -5,7 +5,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
@@ -17,7 +16,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
         // считываем из файла с помощью Scanner
-        Scanner xmlScanner = new Scanner(new File("C:\\Users\\Sheogarath\\IdeaProjects\\LAB5\\src\\DragonCollection.xml"));
+        Scanner xmlScanner = new Scanner(new File("/home/s312551/lab5/DragonCollection.xml"));
         String xmlString = "";
         while(xmlScanner.hasNext()) {
             xmlString += xmlScanner.nextLine();
@@ -235,7 +234,8 @@ public class Main {
                     }
                     writeDocument(newDocument, "C:\\Users\\Sheogarath\\IdeaProjects\\LAB5\\src\\NewDragonCollection.xml");
                     break;
-                    // и далее функции
+                default:
+                    System.out.println("Invalid command. Try 'help' to see list of commands");
             }
         }
     }
@@ -346,8 +346,12 @@ public class Main {
                 exceptionStatus = 1;
             }
             switch (exceptionStatus) {
-                case (1) -> System.out.println("Input must be long. Try again.");
-                case (2) -> System.out.println("Input cant be < 0. Try again");
+                case (1):
+                    System.out.println("Input must be long. Try again.");
+                    break;
+                case (2):
+                    System.out.println("Input cant be < 0. Try again");
+                    break;
             }
         }
         return x;
@@ -382,18 +386,28 @@ public class Main {
                 exceptionStatus = 1;
             }
             switch (exceptionStatus) {
-                case (1) -> System.out.println("Input must be Double. Try again.");
-                case (2) -> System.out.println("Input cant be < 0. Try again");
+                case (1):
+                    System.out.println("Input must be Double. Try again.");
+                    break;
+                case (2):
+                    System.out.println("Input cant be < 0. Try again");
+                    break;
             }
         }
         return x;
     }
     public static DragonType dragonTypeFromFile(String type){
-        DragonType dragonType = switch (type) {
-            case("UNDERGROUND") -> DragonType.UNDERGROUND;
-            case ("AIR") -> DragonType.AIR;
-            case ("FIRE") -> DragonType.FIRE;
-            default -> null;
+        DragonType dragonType = null;
+        switch (type) {
+            case("UNDERGROUND"):
+                dragonType = DragonType.UNDERGROUND;
+                break;
+            case ("AIR"):
+                dragonType = DragonType.AIR;
+                break;
+            case ("FIRE"):
+                dragonType = DragonType.FIRE;
+                break;
         };
         return dragonType;
     }
@@ -422,6 +436,6 @@ public class Main {
 /*
 DONE - help, show, clear, exit, print_field_descending_cave, add_if_max, add_if_min, remove_lower, update id, , remove_by_id id,
 execute_script, filter_starts_with_name, filter_less_than_age
-UPDATE - add, info
-NEED - save
+UPDATE - add, info, save
+NEED -
  */
