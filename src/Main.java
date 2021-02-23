@@ -30,21 +30,34 @@ public class Main {
         // создаем LinkedHashSet
         LinkedHashSet<Dragon> set = new LinkedHashSet<Dragon>();
         // в цикле заполняем коллекцию элементами из запаршенного файла
+        ArrayList<Integer> numberOfErrors= new ArrayList<>();         // Чтобы выводить номера элементов с ошибками
+        String numbers = "";
+        boolean xmlStatus = false;
         for (int i = 0; i < dragonElements.getLength(); i++) {
             Node dragon = dragonElements.item(i);
             NamedNodeMap attributes = dragon.getAttributes();
-            String name = attributes.getNamedItem("name").getNodeValue();
-            Coordinates coords = new Coordinates(Integer.parseInt(attributes.getNamedItem("coordinates").getNodeValue().split(" ")[0]),
-                    Double.parseDouble(attributes.getNamedItem("coordinates").getNodeValue().split(" ")[1]));
-            Long age = Long.parseLong(attributes.getNamedItem("age").getNodeValue());
-            String description = attributes.getNamedItem("description").getNodeValue();
-            Double wingspan = Double.parseDouble(attributes.getNamedItem("wingspan").getNodeValue());
-            String stringDragonType = attributes.getNamedItem("type").getNodeValue();
-            DragonType dragonType = dragonTypeFromFile(stringDragonType);
-            DragonCave cave = new DragonCave(Integer.parseInt(attributes.getNamedItem("cave").getNodeValue().split(" ")[0]),
-                    Double.parseDouble(attributes.getNamedItem("cave").getNodeValue().split(" ")[1]));
-            set.add(new Dragon(name, coords, age, description, wingspan, dragonType, cave));
+            try {
+                String name = attributes.getNamedItem("name").getNodeValue();
+                Coordinates coords = new Coordinates(Integer.parseInt(attributes.getNamedItem("coordinates").getNodeValue().split(" ")[0]),
+                        Double.parseDouble(attributes.getNamedItem("coordinates").getNodeValue().split(" ")[1]));
+                Long age = Long.parseLong(attributes.getNamedItem("age").getNodeValue());
+                String description = attributes.getNamedItem("description").getNodeValue();
+                Double wingspan = Double.parseDouble(attributes.getNamedItem("wingspan").getNodeValue());
+                String stringDragonType = attributes.getNamedItem("type").getNodeValue();
+                DragonType dragonType = dragonTypeFromFile(stringDragonType);
+                DragonCave cave = new DragonCave(Integer.parseInt(attributes.getNamedItem("cave").getNodeValue().split(" ")[0]),
+                        Double.parseDouble(attributes.getNamedItem("cave").getNodeValue().split(" ")[1]));
+                set.add(new Dragon(name, coords, age, description, wingspan, dragonType, cave));
+            } catch (Exception e) {
+                xmlStatus = true;
+                numberOfErrors.add(i);
+                numbers = numbers + i + " ";
+            }
         }
+        if (xmlStatus) {
+            System.out.println("Invalid fields of elements were found. These elements will not be added to collection: " + numbers);
+        }
+
 
         // считываем команды из консоли
         Scanner consoleScanner = new Scanner(System.in);
@@ -79,7 +92,7 @@ public class Main {
                 case ("show"): // DONE
                     if (argument != null) System.out.println("'show' command was detected");
                     for (Dragon dragon : set) {
-                        System.out.println(dragon.getId());
+                        System.out.println(dragon.getAge());
                     }
                     break;
                 case ("clear"): // DONE
@@ -260,7 +273,7 @@ public class Main {
         }
     }
 
-    public static Dragon inputDragonFromConsole(){
+    public static Dragon inputDragonFromConsole() throws NumberFormatException {
         Scanner consoleScanner = new Scanner(System.in);
         int exceptionStatus = 0; // для проверки на исключения парсинга и несоответсвия правилам
         System.out.println("Enter name");

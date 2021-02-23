@@ -16,20 +16,28 @@ public class Dragon {
                   Double w, DragonType t, DragonCave c ) {
         if ((n != null) && (n.length() != 0)) {
             this.name = n;
+        } else {
+            throw new NumberFormatException();
         }
         if (coords != null) {
             this.coordinates = coords;
+        } else {
+            throw new NumberFormatException();
         }
         if ((age > 0)) {
             this.age = age;
-
+        } else {
+            throw new NumberFormatException();
         }
         this.description = d;
         if (w > 0) {
             this.wingspan = w;
+        } else {
+            throw new NumberFormatException();
         }
         this.type = t;
         this.cave = c;
+
     }
     public Integer getId() {return id;}
     public String getName() {return name;}
