@@ -326,6 +326,7 @@ public class Main {
             }
         }
     }
+
     /**
      * Method that transforms Document format to xml string and writes it in file
      * @param document Document to write
