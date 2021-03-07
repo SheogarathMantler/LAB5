@@ -5,9 +5,6 @@ import java.util.Random;
  * Dragon class describing elements of collection
  */
 public class Dragon {
-    /**
-     * fields of dragon
-     */
     private Integer id;
     private String name;
     private Coordinates coordinates;
